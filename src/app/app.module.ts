@@ -8,13 +8,14 @@ import { DirectivaComponent } from './directiva/directiva.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ClienteService } from './clientes/cliente.service';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormComponent } from './clientes/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { loginGuard } from './guards/login.guard';
 import { UsersService } from './auth/users.service';
+import { ErrorCatchingInterceptor } from './interceptor/error-catching.interceptor';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -45,7 +46,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     ReactiveFormsModule
   ],
-  providers: [ClienteService, UsersService],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: ErrorCatchingInterceptor,
+    multi: true
+  },ClienteService, UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
