@@ -7,11 +7,11 @@
       <div class="my-2 text-left">
         <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']" routerLinkActive="router-link-active"  >Crear cliente</button>
       </div>
-     <div *ngIf="clientes?.length == 0" class="alert alert-info">
+     <div *ngIf="clientes?.content?.length == 0" class="alert alert-info">
       No hay registros en la base de datos
 
      </div>
-      <table class="table table-bordered table-striped" *ngIf="clientes?.length>0" >
+      <table class="table table-bordered table-striped" *ngIf="clientes?.content?.length>0" >
         <thead>
             <tr>
                 <th>id</th>
@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let cliente of clientes">
+            <tr *ngFor="let cliente of clientes.content">
                 <td>{{cliente.id}}</td>
                 <td>{{cliente.nombre}}</td>
                 <td>{{cliente.apellido}}</td>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
+import { ClientePage } from './clientePage';
 
 
 @Component({
@@ -11,12 +13,24 @@ import { ClienteService } from './cliente.service';
 })
 export class ClientesComponent implements OnInit{
 
-  clientes: Cliente[];
+  clientes: ClientePage;
+  
+  pageNumber: number;
+  pageSize: number;
 
-  constructor(private clienteService: ClienteService){}
+  constructor(private clienteService: ClienteService, private activatedRoute: ActivatedRoute){}
 
   ngOnInit(){
-    this.clienteService.getClientes().subscribe(
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.pageNumber = params['page'] > 0 ? params['page']-1 : 0;
+      this.pageSize = params['pageSize'] ?? 5;
+    });
+
+    this.getClients();
+  }
+
+  getClients(pageNumber: number = this.pageNumber, pageSize: number = this.pageSize): void{
+    this.clienteService.getClientes(pageNumber, pageSize).subscribe(
       clientes => this.clientes = clientes
     );
   }
@@ -42,7 +56,7 @@ export class ClientesComponent implements OnInit{
       if (result.isConfirmed) {
         this.clienteService.delete(cliente.id).subscribe(
           response => {
-            this.clientes = this.clientes.filter(cli => cli !== cliente)
+            this.getClients();
             swalWithBootstrapButtons.fire(
               'Cliente eliminado!',
               `Cliente ${cliente.nombre} eliminado con exito.`,

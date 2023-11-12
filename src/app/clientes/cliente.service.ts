@@ -1,9 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Cliente } from './cliente';
+import { ClientePage } from './clientePage';
 import { CLIENTES } from './clientes.json';
 
 @Injectable({
@@ -19,9 +20,13 @@ export class ClienteService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getClientes(): Observable<Cliente[]> {
-    // return of(CLIENTES);
-    return  this.http.get<Cliente[]>(this.urlEndpoint,{headers:this.httpHeaders});
+  getClientes(pageNumber:number, pageSize:number): Observable<ClientePage> {
+    
+    let params = new HttpParams();
+    params = params.append("pageNumber", pageNumber);
+    params = params.append("pageSize", pageSize);
+
+    return  this.http.get<ClientePage>(this.urlEndpoint,{headers:this.httpHeaders,params:params});
     // return  this.http.get(this.urlEndpoint).pipe(
     //   map((response) => response as Cliente[])
     // );
