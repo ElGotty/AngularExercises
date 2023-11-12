@@ -36,6 +36,14 @@
             </tr>
         </tbody>
       </table>
+      <mat-paginator 
+        (page)="handlePageEvent($event)"
+        [length]="clientes?.totalElements"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        [hidePageSize]="true"
+        aria-label="Select page">
+      </mat-paginator>
     </div>
   </div>
 </div>

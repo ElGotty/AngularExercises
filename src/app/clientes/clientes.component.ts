@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Cliente } from './cliente';
@@ -67,6 +68,11 @@ export class ClientesComponent implements OnInit{
         
       } 
     })
+  }
+
+  handlePageEvent(e: PageEvent) {
+    this.pageNumber = e.pageIndex;
+    this.getClients();
   }
 
 

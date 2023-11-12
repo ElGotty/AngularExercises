@@ -16,6 +16,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { loginGuard } from './guards/login.guard';
 import { UsersService } from './auth/users.service';
 import { ErrorCatchingInterceptor } from './interceptor/error-catching.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -44,7 +46,9 @@ const routes: Routes = [
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
