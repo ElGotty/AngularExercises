@@ -18,6 +18,11 @@ import { UsersService } from './auth/users.service';
 import { ErrorCatchingInterceptor } from './interceptor/error-catching.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -40,6 +45,7 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     
+    
   ],
   imports: [
     BrowserModule,
@@ -48,7 +54,12 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTableModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule
+
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

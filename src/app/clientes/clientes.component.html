@@ -1,17 +1,50 @@
-<div class="container mt-5">
-  <div class="card border-primary mb-3" >
-    <div class="card-header">Clientes</div>
-    <div class="card-body text-primary">
-      <h5 class="card-title">Listado</h5>
-
-      <div class="my-2 text-left">
-        <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']" routerLinkActive="router-link-active"  >Crear cliente</button>
-      </div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Clientes</mat-card-title>
+    <mat-card-subtitle>Listado</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <button mat-flat-button color="primary" [routerLink]="['/clientes/form']" >
+      Crear cliente
+    </button>
      <div *ngIf="clientes?.content?.length == 0" class="alert alert-info">
       No hay registros en la base de datos
 
      </div>
-      <table class="table table-bordered table-striped" *ngIf="clientes?.content?.length>0" >
+     <mat-table [dataSource]="clientes?.content">
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.nombre}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="apellido">
+        <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.apellido}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="fecha">
+        <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.createAt}} </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef> Opciones </mat-header-cell>
+        <mat-cell *matCellDef="let row"> 
+          <button color="primary" mat-flat-button [routerLink]="['/clientes/form', row.id]" > Editar</button>
+          <button color="warn" mat-flat-button (click)="delete(row)"  >Eliminar</button>
+        </mat-cell>
+      </ng-container>
+    
+      <mat-header-row *matHeaderRowDef="['nombre', 'apellido', 'email', 'fecha','options']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['nombre', 'apellido', 'email', 'fecha','options']"></mat-row>
+    </mat-table>
+
+      <!-- <table class="table table-bordered table-striped" *ngIf="clientes?.content?.length>0" >
         <thead>
             <tr>
                 <th>id</th>
@@ -35,7 +68,7 @@
                 </td>
             </tr>
         </tbody>
-      </table>
+      </table> -->
       <mat-paginator 
         (page)="handlePageEvent($event)"
         [length]="clientes?.totalElements"
@@ -44,6 +77,5 @@
         [hidePageSize]="true"
         aria-label="Select page">
       </mat-paginator>
-    </div>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>
