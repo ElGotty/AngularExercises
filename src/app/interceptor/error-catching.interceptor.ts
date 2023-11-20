@@ -21,7 +21,7 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
                 }
 
 
-                return throwError(() => new Error(error.message))
+                return throwError(() => error)
 
                 
             })
