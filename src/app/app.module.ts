@@ -22,6 +22,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 const routes: Routes = [
@@ -58,7 +59,8 @@ const routes: Routes = [
     MatTableModule,
     MatButtonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatToolbarModule
 
   ],
   providers: [{

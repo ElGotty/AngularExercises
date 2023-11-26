@@ -48,10 +48,10 @@ export class ClienteService {
   }
 
   getCliente(id: number): Observable<Cliente>{
-    return this.http.get<Cliente>(`${this.urlEndpoint}/${id}`).pipe(
+    return this.http.get<Cliente>(`${this.urlEndpoint}/${id}`,{headers: this.httpHeaders}).pipe(
       catchError(e => {
         this.router.navigate(['/clientes']);
-        console.error(e.error.mensaje);
+        console.error(e.error);
         Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(() => Error(e));
       })
